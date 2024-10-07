@@ -37,5 +37,4 @@ Ce dépôt contient une application web de centre commercial (Mall) développée
     symfony server:start
     ```
 
-### Contribution :
-Les contributions sont les bienvenues. Veuillez soumettre une demande d'extraction avec une description détaillée des modifications proposées.
+For mail verification, you need to install MailHog.
