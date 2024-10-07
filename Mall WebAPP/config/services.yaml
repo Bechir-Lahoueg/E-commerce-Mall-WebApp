@@ -1,0 +1,45 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+    app.jwtsecret: '%env(JWT_SECRET)%'
+    image_directory: '%kernel.project_dir%/public/assets/uploads/'
+    shop_directory: '%kernel.project_dir%/public/assets/uploads/shop'
+    subcategories_directory: '%kernel.project_dir%/public/assets/uploads/subcat'
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false    # Automatically registers your services as commands, event subscribers, etc.
+    App\Entity\Users:
+        autowire: true
+    App\Entity\Shop:
+        autowire: true
+    App\Entity\Orders:
+        autowire: true
+    App\Entity\Linker:
+        autowire: true
+
+    Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher:
+        autowire: true
+    App\Service\PictureService:
+        arguments:
+            $params: '%image_directory%'
+    App\Service\UserCustomIdGenerator:
+        autowire: true
+    
+    # add more service definitions here
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones

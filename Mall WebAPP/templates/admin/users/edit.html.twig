@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}user Administration{% endblock %}
+
+{% block body %}
+<div class="mt-3">
+    {% include "_partials/_btn_go_back.html.twig" %}
+    <div class="row">
+    <main class="container mt-3">
+        <section class="row">
+            <div class="col-12">
+                <h1 class="text-info">User Edit: <i class=" text-danger"> <strong > {{ user.getFullname}} </strong> </i></h1>
+                {% include 'admin/users/_form.html.twig' with {button_label: 'Edit'} %}
+                    
+                   
+
+            </div>
+        </section>
+     </main>   
+
+
+
+
+
+{% endblock %}
+{% block footer %}
+     
+{% endblock %}
+

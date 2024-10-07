@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User Orders{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Welcome, {{ user.Fullname }}!</h1>
+
+        {% if orders is not empty %}
+            <h2>Your Orders:</h2>
+            <ul class="list-group mb-4">
+                {% for order in orders %}
+                    <li class="list-group-item">
+                        <h4>Order #{{ order.id }}</h4>
+                        <p><strong>Order Date:</strong> {{ order.createdAt|date('Y-m-d H:i:s') }}</p>
+                        {% if orderDetails is defined and orderDetails[loop.index0] is not empty %}
+                            <ul class="list-group">
+                                {% for detail in orderDetails[loop.index0] %}
+                                    <li class="list-group-item">
+                                        <h5>Order {{ order.getReference() }}</h5>
+                                        <p><strong>Order Date:</strong> {{ order.getCreatedAt()|date('Y-m-d H:i:s') }}</p>
+                                        <p><a href="{{ path('orders_view', {'id': order.getId()}) }}" class="btn btn-primary">View Invoice</a></p>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No details available for this order.</p>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="pagination">
+                <ul class="pagination justify-content-center">
+                    {% for page in 1..pagerfanta.getNbPages() %}
+                        <li class="page-item{% if page == pagerfanta.getCurrentPage() %} active{% endif %}">
+                            <a class="page-link" href="{{ path('orders_index', {'page': page}) }}">{{ page }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <p class="alert alert-info">No orders available for this user.</p>
+        {% endif %}
+    </div>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        .list-group-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .pagination {
+            margin-top: 20px;
+        }
+    </style>
+{% endblock %}

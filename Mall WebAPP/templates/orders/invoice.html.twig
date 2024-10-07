@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="invoice-container bg-light p-4 rounded">
+            <table class="table">
+                <tr class="top">
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <td class="title">
+                                    <img src="/assets/img/gnllogo.png" alt="Logo" style="width: 100%; max-width: 100px;">
+                                </td>
+                                <td>
+                                    Invoice #: {{ order.id }}<br>
+                                    Created: {{ order.getCreatedAt()|date('F d, Y') }}<br>
+                                  
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr class="information">
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <td>
+                                    <br>
+                                   <br>
+                                  
+                                </td>
+                                <td>
+                                    {{ order.getUsers().getFullName() }}<br>
+                                    {{ order.getUsers().getEmail() }}<br>
+                                    {{ order.getUsers().getPhone() }}<br>
+                                    {{ order.getUsers().getAddress() }} {{ order.getUsers().getCity() }} {{ order.getUsers().getZipcode() }}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr class="heading">
+                    <td>Payment Method</td>
+                    
+                </tr>
+
+                <tr class="details">
+                    
+                </tr>
+
+                <tr class="heading">
+                    <td>Item</td>
+                    <td>Price</td>
+                </tr>
+
+                {% for orderDetail in order.getOrdersDetails() %}
+                    <tr class="item">
+                        <td>{{ orderDetail.getProducts().getName() }}</td>
+                        <td>${{ orderDetail.getTotal() }}</td>
+                    </tr>
+                {% endfor %}
+
+                <tr class="total">
+                    <td></td>
+                    <td>Total: ${{ order.getTotalAmount() }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+{% endblock %}

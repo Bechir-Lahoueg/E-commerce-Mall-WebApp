@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Products Administration{% endblock %}
+
+{% block body %}
+<div class="m-5">
+    {% include "_partials/_btn_go_back.html.twig" %}
+    <div class="row">
+    <main class="container mt-4">
+        <section class="row">
+            <div class="col-12">
+                <h1 class="text-info" > Add New Product </h1>
+                 {% include 'admin/products/_form.html.twig' %}   
+
+            </div>
+        </section>
+     </main>   
+
+
+
+
+
+{% endblock %}
+{% block footer %}
+     
+{% endblock %}

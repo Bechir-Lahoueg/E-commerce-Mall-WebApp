@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Shop Administration{% endblock %}
+{% block header
+ %}
+     
+{% endblock %}
+{% block body %}
+{% block container %}
+{% endblock %}
+<div class="">
+        <div class="row">
+            
+                {% include '_partials/_admin.html.twig' %}
+          
+            <main class="col-9 border border-light bg-white p-5">
+              
+
+      
+
+     <h1 class="justify-content-center m-4"> Categories List</h1>
+
+    <table class="mt-5" border="1">
+    
+        <table class="table">
+       
+  <thead>
+    <tr>
+      <th scope="col">Shop id</th>
+      <th scope="col">Shop Name</th>
+      <th scope="col">Owner</th>
+      <th scope="col">Shop image</th>
+      
+      
+      
+       <th scope="col">Action</th>
+
+    </tr>
+
+        {% for shop in shops %}
+           <tbody>
+    <tr>
+        <td>{{shop.id}}</td>
+        <td>{{shop.name}}</td>
+        <td>{{shop.users.getFullname()}}</td>
+        <td> {% if shop.imageFileNameShop is not null %}
+        <img src="{{ asset('assets/uploads/shop/' ~ shop.imageFileNameShop ) }}" alt="Shop Image" width="5%" >
+    {% else %}
+        No Image
+    {% endif %}</td>
+       
+       
+    
+      
+      <td> <a class="btn btn-outline-dark" href= {{ path('admin_shop_edit', {'id': shop.id}) }}>
+                       Edit</a></td>
+    </tr>
+    <tbody>
+        {% endfor %}
+        
+    </table>
+            </main>
+        </div>
+     
+     
+     
+    </div>
+     
+{% endblock %}
+{% block footer %}
+    
+{% endblock %}

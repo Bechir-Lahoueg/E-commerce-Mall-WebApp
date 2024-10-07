@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="invoice-container bg-light p-4 rounded">
+            <h1 class="mb-4">Your Cart</h1>
+
+            <table class="table table-bordered table-hover">
+                <thead class="bg-primary text-light">
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Shop</th>
+                        <th scope="col">Price</th>
+                        <th scope="col" colspan="3">Quantity</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for element in data %}
+                        <tr>
+                            <td>{{ element.product.name }}</td>
+                            <td>{{ element.product.shop.name }}</td>
+                            <td>{{ element.product.price }} DTN</td>
+                            <td colspan="3" class="text-center">
+                                <div class="input-group row-cols-3">
+                                    <a href="{{ path('cart_remove', {'id': element.product.id}) }}" class="btn btn-outline-warning">-</a>
+                                    <span class="input-group-text text-black">{{ element.quantity }}</span>
+                                    <a href="{{ path('cart_add', {'id': element.product.id}) }}" class="btn btn-outline-success">+</a>
+                                </div>
+                            </td>
+                            <td>{{ element.quantity * element.product.price  }} DTN</td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <a href="{{ path('cart_delete', {'id': element.product.id}) }}" class="btn btn-outline-danger btn-sm">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="8" class="text-center">Your cart is empty :/</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="6" class="text-end fw-bold">Total</td>
+                        <td>{{ total }} DTN</td>
+                        <td class="text-center">
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="row">
+                <div class="text-center">
+                    <a href="{{ path('cart_empty') }}" class="btn btn-outline-danger btn-lg">Empty Cart</a>
+                    <a href="{{ path('orders_add') }}" class="btn btn-outline-info btn-lg">Confirm</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <style>
+    /* styles.css */
+
+
+{% endblock %}
+
+
+   

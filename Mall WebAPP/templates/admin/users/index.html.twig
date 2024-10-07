@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}users Administration{% endblock %}
+{% block header %}
+    
+{% endblock %}
+{% block body %}
+{% block container %}
+{% endblock %}
+<div class="">
+        <div class="row">
+            
+                {% include '_partials/_admin.html.twig' %}
+          
+            <main class="col-9 border border-light bg-white p-5">
+              
+
+      
+
+     <h1 class="justify-content-center m-2"> users List</h1>
+
+    <table class="mt-5" border="1">
+    
+        <table class="table">
+       
+  <thead>
+    <tr>
+     <th scope="col">User id</th>
+     <th scope="col">User Name</th>
+     <th scope="col">Shop</th>
+     <th scope="col">Role</th>
+     <th scope="col">Adress</th>
+     <th scope="col">Phone</th>
+     <th scope="col">ReferralCode</th>
+     <th scope="col">Cin</th>
+     <th scope="col">Rib</th>
+     <th scope="col">Images</th>
+    
+     <th scope="col">Action</th>
+
+    </tr>
+
+        {% for user in users %}
+           <tbody>
+    <tr>
+     <th scope="row">{{user.id}}</th>
+     <td>{{user.Fullname}}</td>
+    <td>
+    {% if user.shop is not null %}
+        {{ user.shop.getName() }}
+    {% else %}
+        No Shop
+    {% endif %}
+</td>
+     <td>
+    {% for role in user.roles %}
+        {{ role }}<br>
+    {% endfor %}
+</td>
+     <td >{{ user.address }}{{ user.zipcode }}{{ user.city }} </td>
+     <td>{{user.phone}}</td>
+     <td>{{user.referralCode}}</td>
+     <td>{{user.cin}}</td>
+     <td>{{user.rib}}</td>
+    <td>
+    {% if user.imageFileName is not null %}
+        <img src="{{ asset('assets/uploads/' ~ user.imageFileName ) }}" alt="User Image" width="60%" >
+    {% else %}
+        No Image
+    {% endif %}
+</td>
+       
+      <td> <a class="btn btn-outline-dark" href="{{ path('admin_users_edit', {'id': user.id}) }}">
+
+                       Edit</a></td>
+    </tr>
+
+    <tbody>
+        {% endfor %}
+        
+    </table>
+            </main>
+        </div>
+     
+     
+     
+    </div>
+
+{% endblock %}
+{% block footer %}
+    
+{% endblock %}

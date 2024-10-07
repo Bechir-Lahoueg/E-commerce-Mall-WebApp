@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categoris Administration{% endblock %}
+{% block header %}
+    
+{% endblock %}
+{% block body %}
+{% block container %}
+{% endblock %}
+<div class="">
+        <div class="row">
+            
+                {% include '_partials/_admin.html.twig' %}
+          
+            <main class="col-9 border border-light bg-white p-5">
+              
+
+      
+
+     <h1 class="justify-content-center m-4"> Categories List</h1>
+
+    <table class="mt-5" border="1">
+    
+        <table class="table">
+       
+  <thead>
+    <tr>
+      <th scope="col">Categories id</th>
+      <th scope="col">Categories Name</th>
+      <th scope="col">Slug</th>
+      
+       <th scope="col">Action</th>
+
+    </tr>
+
+        {% for categorie in categories %}
+           <tbody>
+    <tr>
+        <td>{{categorie.id}}</td>
+        <td>{{categorie.name}}</td>
+        <td>{{categorie.slug}}</td>
+    
+      
+      <td> <a class="btn btn-outline-dark" href="#">
+                       Edit</a></td>
+    </tr>
+    <tbody>
+        {% endfor %}
+        
+    </table>
+            </main>
+        </div>
+     
+     
+     
+    </div>
+    
+  <div class="pagination">
+    <ul>
+        {% for page in 1..pagerfanta.getNbPages() %}
+            <li{% if page == pagerfanta.getCurrentPage() %} class="active"{% endif %}>
+                <a href="{{ path('admin_categories_index', {'page': page}) }}">{{ page }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+     
+{% endblock %}
+{% block footer %}
+    
+{% endblock %}

@@ -1,0 +1,147 @@
+{# templates/profile.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block body %}
+    <style>
+        .custom-shadow {
+            box-shadow: 0.5rem 0.5rem 0.5rem 0.5rem rgba(173, 216, 230, 0.2);
+        }
+    </style>
+
+    <div class="container-fluid justify-content-center">
+
+
+
+
+
+
+                    <div class="col mt-2">
+                        <div class="container-fluid">
+                            <div class="card text-center h-100 custom-shadow">
+                                <div class="row">
+                                    <div class="row justify-content-center mt-4">
+                                        <div class="col-6">
+                                            <div class="card text-center h-100 custom-shadow ">
+                                                <strong class="text-info-emphasis"> Grade: {{ curentGrade }} </strong>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-lg-4 m-auto justify-content-center">
+                                            {% if user.imageFileName %}
+                                                <img class="img-fluid rounded-circle custom-shadow " src="{{ asset('assets/uploads/' ~ user.imageFileName ) }}" alt="Profile Image" style="width: 180px; height: 150px;">
+                                            {% else %}
+                                                <p>No profile image available.</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <p> <i class="fa fa-linker"> </i> <strong>{{ user.getFullname() }} </strong> </p>
+                                        <p> <i class="fa fa-envelope"> </i> <strong>{{ user.getEmail() }} </strong> </p>
+                                        <p> <i class="fa fa-phone-volume"> </i> <strong>{{ user.getPhone() }} </strong> </p>
+                                    </div>
+
+                                    <div class="container-fluid justify-content-center">
+                                        <div class="row  justify-content-center">
+
+                                            <div class="col-6 justify-content-center ">
+                                                <p class=""> <strong> Mon Equipe : {{ teamMembersCount }} </strong></p>
+                                                <p class="">
+                                                    <strong>Statut :</strong>
+                                                    {% if user.linker.isIsActive() %}
+                                                        <text class="text-info">Active</text>
+                                                    {% else %}
+                                                        <text class="text-danger">Inactive</text>
+                                                    {% endif %}
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                <div class="row ">
+                    <div class="col-3 card m-2 custom-shadow">
+                        <div class="  mt-2 container-fluid ">
+                            <div class="d-flex flex-column align-items-center mt-2">
+                                <div class="row mt-2">
+                                    <h3>Parent</h3>
+                                </div>
+                                <div class="row ">
+                                    {% if user.parent %}
+                                        <div class="col-md-12 text-center">
+                                            {% if user.parent.imageFileName %}
+                                                <img class="img-fluid rounded-circle custom-shadow m-2" src="{{ asset('assets/uploads/' ~ user.parent.imageFileName) }}" alt="Profile Image" style="width: 80px; height: 80px;">
+                                            {% else %}
+                                                <p>No profile image available.</p>
+                                            {% endif %}
+                                            <h5 class="text-center "> {{ user.parent.getFullname()}}  </h5>
+                                        </div>
+                                    {% else %}
+                                        <div class="col-md-12 text-center">
+                                            <p>No parent information available</p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class=" col mt-2 m-1">
+                        <div class=" card custom-shadow   ">
+                            <div class="container-fluid  mt-2">
+                                <h3>Enfants</h3>
+                                <div class="d-flex flex-wrap ">
+
+                                 
+                                    {% set hasChild = false %}
+
+                                    {% for generationIndex, generation in allGenerations %}
+                                        {% if generationIndex == 1 %}
+                                            {% for childUser in generation %}
+                                                {% if childUser != user %}
+                                                    {% set hasChild = true %}
+                                                    <div class="card m-2 align-items-center border-0" style="width: 150px;">
+                                                        {% if childUser.imageFileName %}
+                                                            <img class="img-fluid rounded-circle custom-shadow align-items-center m-2" src="{{ asset('assets/uploads/' ~ childUser.imageFileName) }}" alt="Profile Image" style="width: 80px; height: 80px;">
+                                                        {% else %}
+                                                            <p>No profile image available.</p>
+                                                        {% endif %}
+                                                        <a href="{{ path('profile_user_viste', {'id': childUser.id}) }}"><h8 class="text-center mt-2 d-flex align-items-center justify-content-center">{{ childUser.getFullname() }}</h8></a>
+                                                    </div>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    {% if not hasChild %}
+                                        <p>No child information available</p>
+                                    {% endif %}
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                        </div>
+                    </div>
+    </div>
+
+
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

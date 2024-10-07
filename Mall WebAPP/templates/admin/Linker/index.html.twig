@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Linker Administration{% endblock %}
+{% block header %}
+    
+{% endblock %}
+{% block body %}
+{% block container %}
+{% endblock %}
+<div class="">
+        <div class="row">
+            
+                {% include '_partials/_admin.html.twig' %}
+          
+            <main class="col-9 border border-light bg-white p-5">
+              
+
+      
+
+     <h1 class="justify-content-center m-2"> Linker List</h1>
+{#                <button class="mt-5 btn btn-outline-info btn-sm mt-auto" href="{{ path('admin_linker_update') }}">#}
+{#                    <i class="fas fa-upload"></i> UpDate#}
+{#                </button>#}
+    <table class="mt-5" border="1">
+    
+        <table class="table">
+       
+  <thead>
+    <tr>
+    
+     <th scope="col">user Name</th>
+     <th scope="col">Phone</th>
+     <th scope="col">email</th>
+     <th scope="col">Cin</th>
+
+     <th scope="col">Monthly Consumption</th>
+        <th scope="col">Team Monthly Consumption</th>
+     <th scope="col">staut</th>
+     <th scope="col">totalConsumption</th>
+     <th scope="col">orderCommission</th>
+     <th scope="col">Sold</th>
+     <th scope="col">Earning</th>
+        <th scope="col">Rib</th>
+     <th scope="col">Action</th>
+
+    </tr>
+
+        {% for linkers in linker %}
+           <tbody>
+    <tr>
+    
+     <td>{{linkers.user.Fullname}}</td>
+     <td>{{linkers.user.phone}}</td>
+     <td>{{linkers.user.email}}</td>
+     <td>{{linkers.user.cin}}</td>
+
+      <td>{{ linkers.monthlyConsumption }}</td>
+     <td>{{ linkers.teamMonthlyConsumption }}</td>
+    <td>{{linkers.isActive}}</td>
+    <td>{{linkers.totalConsumption}}</td>
+    <td>{{linkers.orderCommission}}</td>
+    <td>
+    {% if linkers.solde > 0 %}
+        <a class="btn btn-outline-dark" href="{{ path('admin_linker_paid', {'id': linkers.id, 'solde': linkers.solde}) }}">
+            Pay now: {{ linkers.solde }}
+        </a>
+    {% else %}
+        {{ linkers.solde }}
+    {% endif %}
+    </td>
+    <td>{{linkers.earning}}</td>
+    <td>{{linkers.user.rib}}</td>
+
+
+        <td> <a class="btn btn-outline-dark" href="{{ path('admin_linker_edit', {'id': linkers.user.id}) }}">
+                       Edit</a></td>
+    </tr>
+    <tbody>
+        {% endfor %}
+        
+    </table>
+            </main>
+        </div>
+     
+     
+     
+    </div>
+     
+{% endblock %}
+{% block footer %}
+    
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Products Administration{% endblock %}
+{% block header %}
+    
+{% endblock %}
+{% block body %}
+{% block container %}
+{% endblock %}
+<div class="">
+        <div class="row">
+            
+                {% include '_partials/_admin.html.twig' %}
+          
+            <main class="col-9 border border-light bg-white p-5">
+    <h2>ALL Orders</h2>
+    {% for order in orders %}
+        <div class="order">
+            <h4>Order {{ order.getReference() }}</h4>
+            <p><strong>Order Date:</strong> {{ order.getCreatedAt()|date('Y-m-d H:i:s') }}</p>
+            
+            <p><a href="{{ path('admin_orders_view',{'id': order.getId()}) }}">View Invoice</a></p>
+       <div>
+     {% if not order.isConfirmed %}
+    <form method="post" action="{{ path('admin_orders_confirm', {'id': order.getId()}) }}" class="mt-3">
+        <button type="submit" class="btn btn-primary">Confirm Order</button>
+    </form>
+{% else %}
+    <span class="text-success">Order Confirmed</span>
+{% endif %}
+                </div>
+        </div>
+     
+    {% endfor %}
+  <div class="pagination">
+                    <ul class="pagination justify-content-center">
+                        {% for page in 1..pagerfanta.nbPages %}
+                            <li class="page-item{% if page == pagerfanta.currentpage %} active{% endif %}">
+                                <a class="page-link" href="{{ path('admin_orders_index', {'page': page}) }}">{{ page }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+   
+</div>
+    <style> body {
+    font-family: 'Arial', sans-serif;
+}
+
+.user-information {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.user-details p {
+    margin: 8px 0;
+}
+
+.user-orders {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.order {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
+
+.order h4 {
+    margin-bottom: 10px;
+}
+
+.order p {
+    margin: 8px 0;
+}
+</style>
+{% endblock %}

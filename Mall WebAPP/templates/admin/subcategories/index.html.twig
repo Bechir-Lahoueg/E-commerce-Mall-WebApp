@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categoris Administration{% endblock %}
+{% block header %}
+    
+{% endblock %}
+{% block body %}
+{% block container %}
+{% endblock %}
+<div class="">
+        <div class="row">
+            
+                {% include '_partials/_admin.html.twig' %}
+          
+            <main class="col-9 border border-light bg-white p-5">
+              
+
+      
+
+     <h1 class="justify-content-center m-4"> Categories List</h1>
+
+    <table class="mt-5" border="1">
+    
+        <table class="table">
+       
+  <thead>
+    <tr>
+      <th scope="col">SubCategories id</th>
+      <th scope="col">SubCategories Name</th>
+      
+      
+       <th scope="col">Action</th>
+
+    </tr>
+
+        {% for subcategorie in subcategories %}
+           <tbody>
+    <tr>
+        <td>{{subcategorie.id}}</td>
+        <td>{{subcategorie.name}}</td>
+        <td> {% if subcategorie.imageFileNamesubcat is not null %}
+        <img src="{{ asset('assets/uploads/subcat/' ~ subcategorie.imageFileNamesubcat ) }}" alt="subcat Image" width="20%" >
+    {% else %}
+        No Image
+    {% endif %}</td>
+    
+      
+      <td> <a class="btn btn-outline-dark" href={{ path('admin_subcategories_edit', {'id': subcategorie.id}) }}>
+                       Edit</a></td>
+    </tr>
+    <tbody>
+        {% endfor %}
+        
+    </table>
+            </main>
+        </div>
+     
+     
+     
+    </div>
+     
+{% endblock %}
+{% block footer %}
+    
+{% endblock %}

@@ -1,0 +1,373 @@
+{# templates/profile.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}User Profile{% endblock %}
+
+
+
+
+
+
+{% block body %}
+    <style>
+
+        .custom-shadow {
+            box-shadow: 0.5rem 0.5rem 0.5rem 0.5rem  rgba(173, 216, 230, 0.2);
+        }
+        .progress-circle {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+
+        .progress-circle-svg {
+            transform: rotate(-90deg);
+        }
+
+        .progress-circle-background {
+            fill: none;
+            stroke: #ddd; /* Background color */
+            stroke-width: 6;
+        }
+
+        .progress-circle-bar {
+            fill: none;
+            stroke: rgb(255, 0, 0); /* Progress color */
+            stroke-width: 6;
+            stroke-dasharray: 0;
+            stroke-dashoffset: 0;
+            transition: stroke-dasharray 0.5s ease;
+        }
+
+        .progress-circle-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+    </style>
+
+    <div class="container-fluid ">
+
+        <div class="row  ">
+            <div class="col-2 mt-5 mr-4 custom-shadow  ">   </div>
+
+                <div class="col mt-2">
+                    {% if is_granted("ROLE_LINKER") %}
+                    <p>
+                    <p class="">
+                        Gains Totaux : <strong>{{ earning }} DTN</strong>
+                        &nbsp;&nbsp; Solde Courant :&nbsp;<strong>{{ solde }} DTN</strong>
+                    </p>
+                    </p>
+
+{% endif %}
+                    <div class="row mt-1">
+                            <div class="card col-md-8 mt-2  custom-shadow">
+                                <div class="container-fluid ">
+
+                                        <div class="row ">
+                                            <div class="col-4">
+                                                <div class="card-body m-2   ">
+                                                    Aujourd'hui : {{ currentDate }}
+
+                                                </div>
+                                            </div>
+
+                                            <div class="card-body col-7 mr-5 mt-4 text-center ">
+                                                {% if is_granted("ROLE_LINKER") %}
+                                                <a class="btn  btn-google d-inline custom-shadow ml-4 " href="{{ path('profile_link', {'id': app.user.id}) }}"> <i class=" fas fa-solid fa-users"></i> Mon Réseau</a>
+                                                {% endif %}
+                                                <a class="btn  btn-facebook d-inline custom-shadow  ml-4 " href=" {{ path('orders_index', {'id': app.user.id}) }}"> <i class=" fas fa-solid fa-box-open"></i> Mes ordres </a>
+                                            </div>
+
+                                        </div>
+                                    {% if is_granted("ROLE_LINKER") %}
+                                        <div class="row">
+                                            <div class="row mt-1 justify-content-center">
+                                                <div class="col-md-3 ml-2 mb-4">
+                                                    <div class="card text-center h-100 custom-shadow">
+                                                        <div class="card-header bg-gradient-primary h-100 text-white">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <h6>Vente personal </h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-footer">
+                                                            <strong>  {{ totalConsumption }} DTN</strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 ml-2 mb-4">
+                                                    <div class="card text-center h-100 custom-shadow">
+                                                        <div class="card-header   bg-gradient-danger  h-100 text-white">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <h6>Vente personal mensuel </h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-footer">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <strong class="text-info-emphasis">{{ monthlyConsumption }} DTN </strong>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 ml-2 mb-4">
+                                                    <div class="card text-center h-100 custom-shadow">
+                                                        <div class="card-header bg-gradient-info h-100 text-white text-center">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <h6> Comission Personal </h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-footer">
+
+                                                                    <strong class="text-danger-emphasis">{{  orderCommission }} DTN </strong>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                    <div class="col-md-3 ml-2 mb-4">
+                                                        <div class="card text-center h-100 custom-shadow">
+                                                            <div class="card-header  bg-gradient-dark  text-white">
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <h6>Vente de l'équipe </h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-footer">
+                                                                <strong class="text-danger-emphasis">{{  teamConsumption }} DTN </strong>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <div class="col-md-3 ml-2 mb-4">
+                                                    <div class="card text-center h-100 custom-shadow">
+                                                        <div class="card-header bg-gradient-dark  text-white">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <h6>Vente d'équipe mensuel</h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-footer">
+                                                            <strong class="text-danger-emphasis">{{  monthlyTeamConsumption }} DTN </strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 ml-2 mb-4">
+                                                    <div class="card text-center h-100 custom-shadow">
+                                                        <div class="card-header bg-gradient-info     text-white">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <h6>Commison Résaux </h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-footer">
+                                                            <strong class="text-danger-emphasis">{{  parentCommission }} DTN </strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+
+
+
+                                    {% endif %}
+
+                                </div>
+
+
+
+                            </div>
+
+
+                            <div class="col mt-2">
+                                <div class="container-fluid">
+                                    <div class="card text-center h-100 custom-shadow">
+                                        <div class="row">
+                                            {% if is_granted("ROLE_LINKER") %}
+                                            <div class="row justify-content-center mt-4">
+                                                <div class="col-6 ">
+                                                    <div class="card text-center h-100 custom-shadow ">
+                                                        <strong class="text-info-emphasis"> Grade: {{ currentGrade }} </strong>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                            <div class="row mt-lg-4 m-auto justify-content-center">
+                                                {% if app.user.imageFileName %}
+                                                    <img class="img-fluid rounded-circle custom-shadow " src="{{ asset('assets/uploads/' ~ app.user.imageFileName ) }}" alt="Profile Image" style="width: 180px; height: 150px;">
+                                                {% else %}
+                                                    <p>No profile image available.</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <p> <i class="fa fa-user"> </i> <strong>{{ app.user.getFullname() }} </strong> </p>
+                                            <p> <i class="fa fa-envelope"> </i> <strong>{{ app.user.getEmail() }} </strong> </p>
+                                            <p> <i class="fa fa-phone-volume"> </i> <strong>{{ app.user.getPhone() }} </strong> </p>
+                                        </div>
+
+                                    <div class="container-fluid justify-content-center">
+                                                    <div class="row mt-3 justify-content-center">
+                                                        {% if is_granted("ROLE_LINKER") %}
+                                                        <div class="col-6 justify-content-center mt-3">
+
+
+                                                                    <p class="mt-2"> <strong> Mon Equipe : {{ teamMembersCount }} </strong></p>
+
+                                                                    <p class="mt-2">
+                                                                      <strong>Statut :</strong>
+                                                                        {% if app.user.linker.isIsActive() %}
+                                                                            <text class="text-info">Active</text>
+                                                                        {% else %}
+                                                                            <text class="text-danger">Inactive</text>
+                                                                        {% endif %}
+                                                                    </p>
+
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="progress-circle" data-progress="{{ monthlyConsumption }}">
+                                                                <svg class="progress-circle-svg" viewBox="0 0 100 100">
+                                                                    <circle class="progress-circle-background" cx="50" cy="50" r="45"></circle>
+                                                                    <circle class="progress-circle-bar" cx="50" cy="50" r="45" style="stroke: {{ monthlyConsumption >= objectif ? 'green' : 'red' }}"></circle>
+                                                                </svg>
+                                                                <p class="progress-circle-label">{{ missingToBeActive }}</p>
+                                                            </div>
+                                                        </div>
+
+                                                           <p class="mt-2"><strong> Objective :</strong>  {{ objectif }} DTN</p>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-3"></div>
+                                                            <div class="col-6 justify-content-center">
+                                                                <div class="card text-center mb-3 h-100 custom-shadow ">
+                                                                    <a class="btn btn-danger d-inline" href="{{ path('app_register_linker', {'referralCode': referralCode}) }}">
+                                                                        <i class="fa fa-plus "></i> <strong>Ajouter Linker</strong>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+
+                                </div>
+
+
+
+
+                                    </div>
+                                    </div>
+                                        {% endif %}
+
+
+                    {% if is_granted("ROLE_LINKER") %}}
+                    <div class="row ">
+
+                        <div class="col-2 card m-2 custom-shadow">
+                            <div class="  mt-2 container-fluid ">
+                            <div class="d-flex flex-column align-items-center mt-2">
+                                <div class="row mt-2">
+                                    <h3>Parent</h3>
+                                </div>
+                                <div class="row ">
+                                    {% if app.user.parent %}
+                                        <div class="col-md-12 text-center">
+                                            {% if app.user.parent.imageFileName %}
+                                                <img class="img-fluid rounded-circle custom-shadow m-2" src="{{ asset('assets/uploads/' ~ app.user.parent.imageFileName) }}" alt="Profile Image" style="width: 80px; height: 80px;">
+                                            {% else %}
+                                                <p>No profile image available.</p>
+                                            {% endif %}
+                                            <h5 class="text-center "> {{ app.user.parent.getFullname()}}  </h5>
+                                        </div>
+
+                                    {% else %}
+                                        <div class="col-md-12 text-center">
+                                            <p>No parent information available</p>
+                                        </div>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class=" col mt-2">
+
+                            <div class=" card custom-shadow  m-2 mr-4">
+                                <div class="container-fluid  mt-2">
+                                <h3>Enfants</h3>
+                                    <div class="d-flex flex-wrap ">
+                                        {% for generationIndex, generation in allGenerations %}
+                                            {% if generationIndex == 1 %}
+                                                {% for user in generation %}
+                                                    {# Skip the current user #}
+                                                    {% if user != app.user %}
+                                                        <div class="card m-2 align-items-center border-0" style="width: 150px;">
+                                                            {% if user.imageFileName %}
+                                                                <img class="img-fluid rounded-circle custom-shadow align-items-center m-2" src="{{ asset('assets/uploads/' ~ user.imageFileName) }}" alt="Profile Image" style="width: 80px; height: 80px;">
+                                                            {% else %}
+                                                                <p>No profile image available.</p>
+                                                            {% endif %}
+                                                            <a href="{{ path('profile_user_viste', {'id': user.id}) }}">
+                                                                <h8 class="text-center mt-2 d-flex align-items-center justify-content-center">{{ user.getFullname() }}</h8>
+                                                            </a>
+                                                        </div>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+                        </div>
+                        {% endif %}
+             </div>
+                </div>
+        </div>
+        </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var progressCircle = document.querySelector(".progress-circle");
+            var progressCircleBar = document.querySelector(".progress-circle-bar");
+            var progressPercentage = parseFloat(progressCircle.getAttribute("data-progress")) || 0;
+            var circumference = 2 * Math.PI * 45; // Circumference of a circle with radius 45
+
+            var updateProgress = function () {
+                var dashOffset = circumference * (1 - progressPercentage / 100);
+                progressCircleBar.style.strokeDasharray = circumference;
+                progressCircleBar.style.strokeDashoffset = dashOffset;
+            };
+
+            updateProgress();
+        });
+    </script>
+
+
+{% endblock %}
+{% block footer %}
+
+{% endblock %}
